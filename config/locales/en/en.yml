@@ -1,1 +1,4 @@
 en:
+  errors:
+    login_or_password_invalid: Invalid username or password
+    unauthorized: Unauthorized access

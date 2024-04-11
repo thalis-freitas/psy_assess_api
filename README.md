@@ -13,7 +13,7 @@
 ### Psicólogos
 
 #### Autenticação
-- [ ] POST /api/v1/login
+- [x] POST /api/v1/login
 
 #### Gestão de Avaliados
 - [ ] POST /api/v1/evaluated (cadastrar um novo avaliado)
