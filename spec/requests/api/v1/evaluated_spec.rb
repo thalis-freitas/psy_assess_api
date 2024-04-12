@@ -101,7 +101,7 @@ describe 'Api::V1::EvaluatedController', type: :request do
 
     it 'returns not found if user is a psychologist' do
       psychologist = create(:user, :psychologist)
-      evaluated = create(:user)
+      create(:user)
 
       put "/api/v1/evaluated/#{psychologist.id}",
           params: { evaluated: { name: 'Updated Name' } },

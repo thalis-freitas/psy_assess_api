@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'Role enum' do
+  describe 'role enum' do
     it 'should define correct roles' do
       expect(User.roles.keys).to contain_exactly('psychologist', 'evaluated')
     end
@@ -81,6 +81,14 @@ RSpec.describe User, type: :model do
         expect(new_user.errors.include?(:email)).to be true
         expect(new_user.errors[:email]).to include 'já está em uso'
       end
+    end
+  end
+
+  describe '#birth_date' do
+    it 'formats the birth_date to dd/mm/yyyy' do
+      user = create(:user, birth_date: '2000-01-01')
+
+      expect(user.birth_date).to eq '01/01/2000'
     end
   end
 end

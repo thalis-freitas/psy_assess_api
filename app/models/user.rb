@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   before_validation :update_default_password, if: :evaluated?
 
+  def birth_date
+    super().strftime('%d/%m/%Y') if super().present?
+  end
+
   private
 
   def update_default_password
