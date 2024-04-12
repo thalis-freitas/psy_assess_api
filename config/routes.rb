@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/login', to: 'auth#login'
 
-      resources :evaluated, only: [:index]
+      resources :evaluated, only: [:index, :show]
     end
   end
 end
