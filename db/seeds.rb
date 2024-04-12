@@ -1,4 +1,5 @@
-User.create!(email: 'debora@psy_assess.com',
+User.create!(name: 'Débora Nascimento',
+             email: 'debora@psy.assess',
              password: 'password',
              role: :psychologist)
 

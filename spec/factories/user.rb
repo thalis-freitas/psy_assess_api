@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     cpf { Faker::IdNumber.unique.brazilian_citizen_number }
     email { Faker::Internet.unique.email }
-    birth_date { Faker::Date.birthday(min_age: 18, max_age: 65) }
+    birth_date { Faker::Date.birthday(min_age: 10, max_age: 100) }
 
     trait :psychologist do
       password { Faker::Lorem.word }

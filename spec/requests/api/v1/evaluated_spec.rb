@@ -49,9 +49,25 @@ describe 'Api::V1::EvaluatedController', type: :request do
     end
 
     it 'returns not found if user is not found' do
-      get "/api/v1/evaluated/999999", headers: psychologist_token
+      get '/api/v1/evaluated/999999', headers: psychologist_token
 
       expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  context 'POST /api/v1/evaluated' do
+    it 'creates a new evaluated user' do
+      user_attributes = attributes_for(:user)
+
+      post '/api/v1/evaluated', params: { evaluated: user_attributes },
+                                headers: psychologist_token
+
+      expect(response).to have_http_status(:created)
+      expect(json[:cpf]).to eq(user_attributes[:cpf])
+      expect(json[:email]).to eq(user_attributes[:email])
+
+      expect(json.keys)
+        .to include(*%i[id name cpf email birth_date])
     end
   end
 end

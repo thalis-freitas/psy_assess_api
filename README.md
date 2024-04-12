@@ -16,15 +16,17 @@
 - [x] POST /api/v1/login
 
 #### Gestão de Avaliados
-- [ ] POST /api/v1/evaluated (cadastrar um novo avaliado)
+- [x] POST /api/v1/evaluated (cadastrar um novo avaliado)
 - [x] GET /api/v1/evaluated (listar todos os avaliados)
-- [x] GET /api/v1/evalueted/:id (dados de um avaliado específico)
-- [ ] GET /api/v1/evalueted/:id/instruments (listar os instrumentos de um avaliado)
+- [x] GET /api/v1/evaluated/:id (dados de um avaliado específico)
+- [ ] PUT /api/v1/evaluated/:id (atualizar dados de um avaliado)
+- [ ] GET /api/v1/evaluated/:id/instruments (listar os instrumentos de um avaliado)
 
 #### Gestão de Instrumentos
 - [ ] POST /api/v1/instruments (cadastrar um novo instrumento)
 - [ ] GET /api/v1/instruments (listar todos os instrumentos)
 - [ ] GET /api/v1/instruments/:id (dados de um instrumento específico)
+- [ ] PUT /api/v1/instruments/:id (atualizar um instrumento existente)
 
 #### Aplicação de Instrumentos
 - [ ] POST /api/v1/evaluations (aplicar um instrumento a um avaliado)

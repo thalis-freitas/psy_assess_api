@@ -21,4 +21,66 @@ RSpec.describe User, type: :model do
       expect(user.authenticate(user.cpf)).to be_falsey
     end
   end
+
+  describe '#valid' do
+    context 'presence' do
+      it 'name field is required' do
+        user = User.new(name: '')
+
+        user.valid?
+
+        expect(user.errors.include?(:name)).to be true
+        expect(user.errors[:name]).to include 'não pode ficar em branco'
+      end
+
+      it 'email field is required' do
+        user = User.new(email: '')
+
+        user.valid?
+
+        expect(user.errors.include?(:email)).to be true
+        expect(user.errors[:email]).to include 'não pode ficar em branco'
+      end
+
+      it 'cpf field is required' do
+        user = User.new(cpf: '')
+
+        user.valid?
+
+        expect(user.errors.include?(:cpf)).to be true
+        expect(user.errors[:cpf]).to include 'não pode ficar em branco'
+      end
+
+      it 'birth_date field is required' do
+        user = User.new(birth_date: '')
+
+        user.valid?
+
+        expect(user.errors.include?(:birth_date)).to be true
+        expect(user.errors[:birth_date]).to include 'não pode ficar em branco'
+      end
+    end
+
+    context 'uniqueness' do
+      it 'should validate uniqueness of cpf' do
+        create(:user, cpf: '12345678900')
+        new_user = build(:user, cpf: '12345678900')
+
+        new_user.valid?
+
+        expect(new_user.errors.include?(:cpf)).to be true
+        expect(new_user.errors[:cpf]).to include 'já está em uso'
+      end
+
+      it 'should validate uniqueness of email' do
+        create(:user, email: 'test@example.com')
+        new_user = build(:user, email: 'test@example.com')
+
+        new_user.valid?
+
+        expect(new_user.errors.include?(:email)).to be true
+        expect(new_user.errors[:email]).to include 'já está em uso'
+      end
+    end
+  end
 end
