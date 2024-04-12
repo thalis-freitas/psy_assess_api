@@ -69,5 +69,53 @@ describe 'Api::V1::EvaluatedController', type: :request do
       expect(json.keys)
         .to include(*%i[id name cpf email birth_date])
     end
+
+    it 'does not allow creating a psychologist' do
+      psychologist_attributes = attributes_for(:user, :psychologist)
+
+      post '/api/v1/evaluated', params: { evaluated: psychologist_attributes },
+                                headers: psychologist_token
+
+      created_user = User.find_by(email: psychologist_attributes[:email])
+      expect(created_user.role).not_to eq('psychologist')
+    end
+  end
+
+  context 'PUT /api/v1/evaluated/:id' do
+    it 'updates an evaluated user' do
+      evaluated = create(:user)
+      updated_name = 'Updated Name'
+
+      put "/api/v1/evaluated/#{evaluated.id}",
+          params: { evaluated: { name: updated_name } },
+          headers: psychologist_token
+
+      expect(response).to have_http_status(:success)
+      expect(json[:name]).to eq(updated_name)
+      expect(json[:email]).to eq(evaluated.email)
+      expect(json[:cpf]).to eq(evaluated.cpf)
+
+      expect(json.keys)
+        .to include(*%i[id name cpf email birth_date])
+    end
+
+    it 'returns not found if user is a psychologist' do
+      psychologist = create(:user, :psychologist)
+      evaluated = create(:user)
+
+      put "/api/v1/evaluated/#{psychologist.id}",
+          params: { evaluated: { name: 'Updated Name' } },
+          headers: psychologist_token
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'returns not found if user is not found' do
+      put '/api/v1/evaluated/999999',
+          params: { evaluated: { name: 'Updated Name' } },
+          headers: psychologist_token
+
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end
