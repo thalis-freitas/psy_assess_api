@@ -17,7 +17,7 @@
 
 #### Gestão de Avaliados
 - [ ] POST /api/v1/evaluated (cadastrar um novo avaliado)
-- [ ] GET /api/v1/evaluated (listar todos os avaliados)
+- [x] GET /api/v1/evaluated (listar todos os avaliados)
 - [ ] GET /api/v1/evalueted/:id (dados de um avaliado específico)
 - [ ] GET /api/v1/evalueted/:id/instruments (listar os instrumentos de um avaliado)
 

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
     name { Faker::Name.name }
-    cpf { Faker::IDNumber.brazilian_citizen_number }
+    cpf { Faker::IdNumber.unique.brazilian_citizen_number }
     email { Faker::Internet.unique.email }
     birth_date { Faker::Date.birthday(min_age: 18, max_age: 65) }
 
