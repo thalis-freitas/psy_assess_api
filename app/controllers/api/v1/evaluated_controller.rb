@@ -14,7 +14,7 @@ class Api::V1::EvaluatedController < Api::V1::ApiController
   def create
     @evaluated = User.build(evaluated_params)
 
-    if @evaluated.save!
+    if @evaluated.save
       render json: @evaluated, status: :created
     else
       render json: { errors: @evaluated.errors.full_messages },
