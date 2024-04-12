@@ -66,4 +66,6 @@ RSpec.configure do |config|
   config.include Request::JsonHelpers, type: :request
 
   config.include AuthService
+
+  config.include AuthenticationHelper
 end
