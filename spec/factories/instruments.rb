@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :instrument do
-    name { "Instrumento #{Faker::Lorem.sentence}" }
+    name { "Instrumento #{Faker::Lorem.unique.sentence}" }
     description { Faker::Lorem.paragraph }
 
     trait :with_questions do
