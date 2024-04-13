@@ -4,3 +4,5 @@ User.create!(name: 'Débora Nascimento',
              role: :psychologist)
 
 FactoryBot.create_list(:user, 10)
+
+FactoryBot.create_list(:instrument, 10, :with_questions)
