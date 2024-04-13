@@ -1,9 +1,14 @@
 class Api::V1::InstrumentsController < Api::V1::ApiController
   before_action :authorize
+  before_action :set_instrument, only: [:show]
 
   def index
     @instruments = Instrument.select(:id, :name, :description)
     render json: @instruments
+  end
+
+  def show
+    render json: @instrument, include: [questions: { include: :options }]
   end
 
   def create
@@ -28,5 +33,9 @@ class Api::V1::InstrumentsController < Api::V1::ApiController
                       _destroy
                     ] }
                   ])
+  end
+
+  def set_instrument
+    @instrument = Instrument.includes(questions: :options).find(params[:id])
   end
 end

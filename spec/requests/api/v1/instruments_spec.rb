@@ -46,4 +46,27 @@ RSpec.describe 'Api::V1::Instruments', type: :request do
       expect(Instrument.last.questions.first.options.count).to eq(4)
     end
   end
+
+  context 'GET /api/v1/instruments/:id' do
+    it 'returns the specified instrument' do
+      instrument = create(:instrument, :with_questions)
+
+      get "/api/v1/instruments/#{instrument.id}", headers: psychologist_token
+
+      expect(response).to have_http_status(:success)
+      expect(json[:id]).to eq(instrument.id)
+      expect(json[:name]).to eq(instrument.name)
+      expect(json[:description]).to eq(instrument.description)
+      expect(json[:questions]).to be_an(Array)
+      expect(json[:questions].first[:options]).to be_an(Array)
+    end
+
+    it 'returns not found if instrument is not found' do
+      create(:instrument, :with_questions)
+
+      get '/api/v1/instruments/99999', headers: psychologist_token
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end

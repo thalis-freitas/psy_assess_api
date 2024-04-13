@@ -25,7 +25,7 @@
 #### Gestão de Instrumentos
 - [x] POST /api/v1/instruments (cadastrar um novo instrumento)
 - [x] GET /api/v1/instruments (listar todos os instrumentos)
-- [ ] GET /api/v1/instruments/:id (dados de um instrumento específico)
+- [x] GET /api/v1/instruments/:id (dados de um instrumento específico)
 
 #### Aplicação de Instrumentos
 - [ ] POST /api/v1/evaluations (aplicar um instrumento a um avaliado)
