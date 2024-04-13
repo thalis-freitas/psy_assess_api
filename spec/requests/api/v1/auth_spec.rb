@@ -4,7 +4,7 @@ describe Api::V1::AuthController, type: :request do
   describe 'POST /api/v1/login' do
     context 'with valid email and password' do
       before do
-        @user = create(:user)
+        @user = create(:user, :psychologist)
         post '/api/v1/login',
              params: { user: { email: @user.email, password: @user.password } }
       end
