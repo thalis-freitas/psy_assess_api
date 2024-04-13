@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    attributes:
+      user:
+        name: Nome
+        cpf: CPF
+        email: E-mail
+        birth_date: Data de nascimento
+        password: Senha
