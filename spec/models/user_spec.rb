@@ -86,9 +86,19 @@ RSpec.describe User, type: :model do
 
   describe '#birth_date' do
     it 'formats the birth_date to dd/mm/yyyy' do
-      user = create(:user, birth_date: '2000-01-01')
+      user = build(:user, birth_date: '2000-01-01')
 
       expect(user.birth_date).to eq '01/01/2000'
+    end
+  end
+
+  describe '#validate_birth_date_cannot_be_future' do
+    it 'adds an error if birth_date is in the future' do
+      user = build(:user, birth_date: Date.tomorrow.to_s)
+
+      user.valid?
+
+      expect(user.errors[:birth_date]).to include('não pode ser futura')
     end
   end
 end

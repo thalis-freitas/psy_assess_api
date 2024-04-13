@@ -17,7 +17,7 @@ class Api::V1::EvaluatedController < Api::V1::ApiController
     if @evaluated.save
       render json: @evaluated, status: :created
     else
-      render json: { errors: @evaluated.errors.full_messages },
+      render json: { errors: @evaluated.errors },
              status: :unprocessable_entity
     end
   end
@@ -26,7 +26,7 @@ class Api::V1::EvaluatedController < Api::V1::ApiController
     if @evaluated.update(evaluated_params)
       render json: @evaluated, status: :ok
     else
-      render json: { errors: @evaluated.errors.full_messages },
+      render json: { errors: @evaluated.errors },
              status: :unprocessable_entity
     end
   end
