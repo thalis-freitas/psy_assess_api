@@ -1,6 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Instruments', type: :request do
+  context 'GET /api/v1/instruments' do
+    it 'returns a list of all instruments with only name and description' do
+      create_list(:instrument, 5)
+
+      get '/api/v1/instruments', headers: psychologist_token
+
+      expect(response).to have_http_status(:success)
+      expect(json.count).to eq(5)
+      json.each do |instrument|
+        expect(instrument.keys).to contain_exactly(:id, :name, :description)
+      end
+    end
+  end
+
   context 'POST /api/v1/instrument' do
     it 'creates a new instrument' do
       def build_options

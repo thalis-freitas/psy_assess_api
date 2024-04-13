@@ -1,6 +1,11 @@
 class Api::V1::InstrumentsController < Api::V1::ApiController
   before_action :authorize
 
+  def index
+    @instruments = Instrument.select(:id, :name, :description)
+    render json: @instruments
+  end
+
   def create
     @instrument = Instrument.new(instrument_params)
     if @instrument.save
