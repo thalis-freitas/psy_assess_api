@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       post '/login', to: 'auth#login'
 
       resources :evaluated, only: [:index, :show, :create, :update]
+      resources :instruments, only: [:create]
     end
   end
 end

@@ -14,7 +14,7 @@ RSpec.describe Question, type: :model do
 
     it 'destroys options when question is destroyed' do
       question = create(:question)
-      create(:option, question: question)
+      create(:option, question:)
       expect { question.destroy }.to change(Option, :count).by(-1)
     end
   end

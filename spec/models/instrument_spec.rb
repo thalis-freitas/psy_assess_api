@@ -9,7 +9,7 @@ RSpec.describe Instrument, type: :model do
 
     it 'should destroy questions when instrument is destroyed' do
       instrument = create(:instrument)
-      question = create(:question, instrument: instrument)
+      create(:question, instrument:)
       expect { instrument.destroy }.to change { Question.count }.by(-1)
     end
   end
