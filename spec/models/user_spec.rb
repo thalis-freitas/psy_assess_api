@@ -101,4 +101,11 @@ RSpec.describe User, type: :model do
       expect(user.errors[:birth_date]).to include('não pode ser futura')
     end
   end
+
+  describe 'associations' do
+    it 'should have many evaluations' do
+      user = User.new
+      expect(user).to respond_to(:evaluations)
+    end
+  end
 end

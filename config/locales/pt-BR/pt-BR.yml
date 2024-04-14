@@ -3,3 +3,8 @@ pt-BR:
     login_or_password_invalid: Usuário ou senha inválidos
     unauthorized: Acesso não autorizado
     internal_server_error: Erro interno do servidor
+    instrument_already_applied: Este instrumento já foi aplicado a este avaliado
+  links:
+    instrument_evaluation_link: Link para o Instrumento de Avaliação
+  success:
+    email_successfully_sent: E-mail enviado com sucesso

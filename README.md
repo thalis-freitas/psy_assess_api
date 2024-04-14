@@ -3,6 +3,10 @@
 ## Sumário
   * [Descrição do projeto](#descrição-do-projeto)
   * [Funcionalidades](#funcionalidades)
+  * [Como rodar a aplicação](#como-rodar-a-aplicação)
+  * [Como rodar os testes](#como-rodar-os-testes)
+  * [Como executar a análise do código](#como-executar-a-análise-do-código)
+  * [Como derrubar a aplicação](#como-derrubar-a-aplicação)
 
 ## Descrição do projeto
 
@@ -28,8 +32,8 @@
 - [x] GET /api/v1/instruments/:id (dados de um instrumento específico)
 
 #### Aplicação de Instrumentos
-- [ ] POST /api/v1/evaluations (aplicar um instrumento a um avaliado)
-- [ ] POST /api/v1/send_instrument/:evaluation_id (enviar por e-mail o link do instrumento ao avaliado)
+- [x] POST /api/v1/evaluations (aplicar um instrumento a um avaliado)
+- [x] POST /api/v1/evaluations/:id/send_instrument (enviar por e-mail o link do instrumento ao avaliado)
 
 #### Visualização dos Resultados
 - [ ] GET /api/v1/evaluations/:id/results (visualizar os resultados de um instrumento finalizado)
@@ -47,3 +51,76 @@
 <div align="center">
   :construction: Em desenvolvimento...
 </div>
+
+## Como rodar a aplicação
+
+No terminal, clone o projeto:
+
+```
+git clone git@github.com:thalis-freitas/psy_assess_api.git
+```
+
+Entre na pasta do projeto:
+
+```
+cd psy_assess_api
+```
+
+Certifique-se de que o Docker esteja em execução em sua máquina e construa as imagens:
+
+```
+docker compose build
+```
+
+Suba os containers:
+
+```
+docker compose up -d
+```
+
+Acesse o container da aplicação:
+
+```
+docker compose exec app bash
+```
+
+Crie o banco de dados:
+
+```
+rails db:create
+```
+
+Execute as migrações:
+
+```
+rails db:migrate
+```
+
+Popule o banco de dados:
+```
+rails db:seed
+```
+
+* Dados do usuário criado para autenticação:
+
+| E-mail             | Senha     |
+| ------------------ | --------- |
+| debora@psy.assess  | password  |
+
+## Como rodar os testes
+
+```
+rspec
+```
+
+## Como executar a análise do código
+
+```
+rubocop
+```
+
+## Como derrubar a aplicação
+
+```
+docker compose down
+```

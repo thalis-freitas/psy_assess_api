@@ -10,7 +10,15 @@ RSpec.describe Instrument, type: :model do
     it 'should destroy questions when instrument is destroyed' do
       instrument = create(:instrument)
       create(:question, instrument:)
-      expect { instrument.destroy }.to change { Question.count }.by(-1)
+
+      instrument.destroy
+
+      expect(Question.count).to eq(0)
+    end
+
+    it 'should have many evaluations' do
+      instrument = Instrument.new
+      expect(instrument).to respond_to(:evaluations)
     end
   end
 
