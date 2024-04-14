@@ -48,4 +48,13 @@ RSpec.describe Evaluation, type: :model do
       end
     end
   end
+
+  describe 'generate token' do
+    it 'generates a unique token before creation' do
+      evaluation = create(:evaluation, evaluated: create(:user),
+                                       instrument: create(:instrument))
+
+      expect(evaluation.token).not_to be_nil
+    end
+  end
 end

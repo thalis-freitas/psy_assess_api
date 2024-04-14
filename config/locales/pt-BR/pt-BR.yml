@@ -3,3 +3,5 @@ pt-BR:
     login_or_password_invalid: Usuário ou senha inválidos
     unauthorized: Acesso não autorizado
     internal_server_error: Erro interno do servidor
+  links:
+    instrument_evaluation_link: Link para o Instrumento de Avaliação

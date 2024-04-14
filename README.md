@@ -33,7 +33,7 @@
 
 #### Aplicação de Instrumentos
 - [x] POST /api/v1/evaluations (aplicar um instrumento a um avaliado)
-- [ ] POST /api/v1/send_instrument/:evaluation_id (enviar por e-mail o link do instrumento ao avaliado)
+- [x] POST /api/v1/evaluations/:id/send_instrument (enviar por e-mail o link do instrumento ao avaliado)
 
 #### Visualização dos Resultados
 - [ ] GET /api/v1/evaluations/:id/results (visualizar os resultados de um instrumento finalizado)

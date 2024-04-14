@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Instrumento de Avaliação Disponível</title>
+</head>
+<body>
+  <h1>Hello <%= @evaluation.evaluated.name %>,</h1>
+  <p>
+    Você foi convidado a completar um instrumento. Clique no link abaixo para iniciar sua avaliação.
+  </p>
+  <p>
+    <%= link_to 'Iniciar o instrumento', '' %>
+  </p>
+</body>
+</html>

@@ -1,6 +1,8 @@
 class Evaluation < ApplicationRecord
-  belongs_to :evaluated, class_name: 'User', foreign_key: 'evaluated_id'
+  belongs_to :evaluated, class_name: 'User'
   belongs_to :instrument
+
+  before_validation :generate_unique_token
 
   enum status: { pending: 0, sent: 3, finished: 5 }
 
@@ -14,5 +16,9 @@ class Evaluation < ApplicationRecord
     return if evaluated&.evaluated?
 
     errors.add(:evaluated, I18n.t('errors.must_be_evaluated_role'))
+  end
+
+  def generate_unique_token
+    self.token = SecureRandom.hex(10)
   end
 end

@@ -10,8 +10,20 @@ describe 'Api::V1::EvaluationsController', type: :request do
                                   params: { evaluated_id: evaluated.id,
                                             instrument_id: instrument.id }
 
-      expect(response).to have_http_status(:created)
-      expect(json[:status]).to eq('pending')
+      expect(response).to have_http_status(:ok)
+      expect(Evaluation.count).to eq(1)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      expect(json[:message]).to eq('Email enviado com sucesso.')
+    end
+
+    it 'when faile does not create an evaluation' do
+      post '/api/v1/evaluations', headers: psychologist_token,
+                                  params: { evaluated_id: nil,
+                                            instrument_id: nil }
+
+      expect(response).to have_http_status(:not_found)
+      expect(Evaluation.count).to eq(0)
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
   end
 end
