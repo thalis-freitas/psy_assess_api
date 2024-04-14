@@ -3,6 +3,10 @@ class User < ApplicationRecord
 
   enum role: { evaluated: 0, psychologist: 5 }
 
+  has_many :evaluations, foreign_key: :evaluated_id,
+                         dependent: :destroy,
+                         inverse_of: :evaluated
+
   validates :name, :cpf, :email, :birth_date, presence: { if: :evaluated? }
   validates :cpf, :email, uniqueness: { if: :evaluated? }, allow_blank: true
   validate :validate_birth_date_cannot_be_future

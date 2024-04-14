@@ -1,5 +1,5 @@
 class Evaluation < ApplicationRecord
-  belongs_to :evaluated, class_name: 'User'
+  belongs_to :evaluated, class_name: 'User', foreign_key: 'evaluated_id'
   belongs_to :instrument
 
   enum status: { pending: 0, sent: 3, finished: 5 }

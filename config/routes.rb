@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
       resources :evaluated, only: [:index, :show, :create, :update]
       resources :instruments, only: [:index, :show, :create]
+      resources :evaluations, only: [:create]
     end
   end
 end

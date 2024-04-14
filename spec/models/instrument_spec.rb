@@ -12,6 +12,11 @@ RSpec.describe Instrument, type: :model do
       create(:question, instrument:)
       expect { instrument.destroy }.to change { Question.count }.by(-1)
     end
+
+    it 'should have many evaluations' do
+      instrument = Instrument.new
+      expect(instrument).to respond_to(:evaluations)
+    end
   end
 
   describe '#valid' do
