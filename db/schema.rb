@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_13_040525) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_14_135440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "evaluations", force: :cascade do |t|
+    t.bigint "evaluated_id", null: false
+    t.bigint "instrument_id", null: false
+    t.integer "status", default: 0
+    t.integer "score"
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["evaluated_id"], name: "index_evaluations_on_evaluated_id"
+    t.index ["instrument_id"], name: "index_evaluations_on_instrument_id"
+  end
 
   create_table "instruments", force: :cascade do |t|
     t.string "name"
@@ -50,6 +62,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_13_040525) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "evaluations", "instruments"
+  add_foreign_key "evaluations", "users", column: "evaluated_id"
   add_foreign_key "options", "questions"
   add_foreign_key "questions", "instruments"
 end
