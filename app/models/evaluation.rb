@@ -7,8 +7,9 @@ class Evaluation < ApplicationRecord
   enum status: { pending: 0, sent: 3, finished: 5 }
 
   validate :evaluated_must_be_valid_role
-
   validates :token, uniqueness: true
+  validates :instrument_id, uniqueness: { scope: :evaluated_id,
+                                          message: I18n.t('errors.instrument_already_applied') }
 
   private
 

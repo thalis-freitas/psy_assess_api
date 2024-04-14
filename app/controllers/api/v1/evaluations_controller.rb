@@ -9,7 +9,7 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
     if @evaluation.save
       send_instrument
     else
-      render json: evaluation.errors, status: :unprocessable_entity
+      render json: @evaluation.errors, status: :unprocessable_entity
     end
   end
 
@@ -18,7 +18,8 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
 
     EvaluationMailer.send_instrument(@evaluation).deliver_now
 
-    render json: { message: 'Email enviado com sucesso.' }, status: :ok
+    render json: { message: I18n.t('success.email_successfully_sent') },
+           status: :ok
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
