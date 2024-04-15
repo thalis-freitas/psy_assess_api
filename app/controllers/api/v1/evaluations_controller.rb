@@ -1,6 +1,6 @@
 class Api::V1::EvaluationsController < Api::V1::ApiController
-  before_action :authorize, except: :confirm
-  before_action :set_evaluation, only: :show
+  before_action :authorize, except: %i[confirm confirm_data]
+  before_action :set_evaluation, only: %i[show confirm_data]
 
   def show
     evaluation = { id: @evaluation.id, evaluated: @evaluation.evaluated.name,
@@ -45,6 +45,17 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
     end
   end
 
+  def confirm_data
+    evaluated = @evaluation.evaluated
+    if evaluated.update(evaluated_params)
+      render json: { evaluated:, evaluation: @evaluation },
+             status: :ok
+    else
+      render json: { errors: evaluated.errors.full_messages },
+             status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_evaluation
@@ -53,5 +64,9 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
 
   def evaluation_params
     params.permit(:evaluated_id, :instrument_id)
+  end
+
+  def evaluated_params
+    params.require(:evaluated).permit(:name, :cpf, :email, :birth_date)
   end
 end

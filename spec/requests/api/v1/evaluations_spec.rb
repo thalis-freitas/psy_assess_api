@@ -79,4 +79,33 @@ describe 'Api::V1::EvaluationsController', type: :request do
       expect(json[:error]).to eq('Token inválido')
     end
   end
+
+  context 'POST /api/v1/evaluations/:id/confirm_data' do
+    it 'updates the evaluated data' do
+      evaluated = create(:user, role: :evaluated)
+      instrument = create(:instrument)
+      evaluation = create(:evaluation, evaluated:, instrument:)
+
+      updated_data = { name: 'Updated Name', birth_date: '2001-01-01' }
+
+      post "/api/v1/evaluations/#{evaluation.id}/confirm_data",
+           params: { evaluated: updated_data }
+
+      expect(response).to have_http_status(:ok)
+      expect(evaluated.reload.name).to eq('Updated Name')
+    end
+
+    it 'returns errors if the update fails' do
+      evaluated = create(:user, role: :evaluated)
+      instrument = create(:instrument)
+      evaluation = create(:evaluation, evaluated:, instrument:)
+
+      invalid_data = { name: '', cpf: '', email: '', birth_date: '' }
+      post "/api/v1/evaluations/#{evaluation.id}/confirm_data",
+           params: { evaluated: invalid_data }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json[:errors]).to be_present
+    end
+  end
 end
