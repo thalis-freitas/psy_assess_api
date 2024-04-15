@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EvaluationMailer, type: :mailer do
-  describe 'send_instrument' do
+  context 'send_instrument' do
     it 'renders the headers' do
       evaluation = create(:evaluation, evaluated: create(:user),
                                        instrument: create(:instrument))

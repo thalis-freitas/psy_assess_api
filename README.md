@@ -41,8 +41,8 @@
 ### Avaliados
 
 #### Confirmação de Dados
-- [ ] GET /api/v1/confirm/:token (redirecionamento a partir do link no e-mail, com um token único para a sessão de avaliação)
-- [ ] POST /api/v1/confirm (confirmação dos dados do avaliado)
+- [x] GET /api/v1/confirm/:token (redirecionamento a partir do link no e-mail, com um token único para a sessão de avaliação)
+- [x] POST /api/v1/evaluations/:id/confirm_data (confirmação dos dados do avaliado)
 
 #### Execução do Instrumento
 - [ ] GET /api/v1/evaluations/:id/start (iniciar a execução do instrumento)

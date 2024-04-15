@@ -4,6 +4,7 @@ pt-BR:
     unauthorized: Acesso não autorizado
     internal_server_error: Erro interno do servidor
     instrument_already_applied: Este instrumento já foi aplicado a este avaliado
+    invalid_token: Token inválido
   links:
     instrument_evaluation_link: Link para o Instrumento de Avaliação
   success:

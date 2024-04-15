@@ -55,4 +55,57 @@ describe 'Api::V1::EvaluationsController', type: :request do
         .to include(*%i[id instrument evaluated status score description])
     end
   end
+
+  context 'GET /api/v1/confirm/:token' do
+    it 'returns evaluation and evaluated details when token is valid' do
+      evaluated = create(:user)
+      instrument = create(:instrument)
+      evaluation = create(:evaluation, evaluated:, instrument:, token: 'valid_token')
+
+      get "/api/v1/confirm/#{evaluation.token}", headers: psychologist_token
+
+      expect(response).to have_http_status(:ok)
+      expect(json[:evaluation][:id]).to eq(evaluation.id)
+      expect(json[:evaluated][:name]).to eq(evaluated.name)
+      expect(json[:evaluated][:cpf]).to eq(evaluated.cpf)
+      expect(json[:evaluated][:email]).to eq(evaluated.email)
+      expect(json[:evaluated][:birth_date]).to eq(evaluated.birth_date.to_s)
+    end
+
+    it 'returns an error when token is invalid' do
+      get '/api/v1/confirm/invalid_token', headers: psychologist_token
+
+      expect(response).to have_http_status(:not_found)
+      expect(json[:error]).to eq('Token inválido')
+    end
+  end
+
+  context 'POST /api/v1/evaluations/:id/confirm_data' do
+    it 'updates the evaluated data' do
+      evaluated = create(:user, role: :evaluated)
+      instrument = create(:instrument)
+      evaluation = create(:evaluation, evaluated:, instrument:)
+
+      updated_data = { name: 'Updated Name', birth_date: '2001-01-01' }
+
+      post "/api/v1/evaluations/#{evaluation.id}/confirm_data",
+           params: { evaluated: updated_data }
+
+      expect(response).to have_http_status(:ok)
+      expect(evaluated.reload.name).to eq('Updated Name')
+    end
+
+    it 'returns errors if the update fails' do
+      evaluated = create(:user, role: :evaluated)
+      instrument = create(:instrument)
+      evaluation = create(:evaluation, evaluated:, instrument:)
+
+      invalid_data = { name: '', cpf: '', email: '', birth_date: '' }
+      post "/api/v1/evaluations/#{evaluation.id}/confirm_data",
+           params: { evaluated: invalid_data }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json[:errors]).to be_present
+    end
+  end
 end
