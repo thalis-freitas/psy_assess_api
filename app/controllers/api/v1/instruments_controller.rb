@@ -1,6 +1,6 @@
 class Api::V1::InstrumentsController < Api::V1::ApiController
   before_action :authorize
-  before_action :set_instrument, only: [:show]
+  before_action :set_instrument, only: :show
 
   def index
     @instruments = Instrument.select(:id, :name, :description)

@@ -118,4 +118,38 @@ describe 'Api::V1::EvaluatedController', type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  context 'GET /api/v1/evaluated/:id/instruments' do
+    it 'returns all instruments applied to the evaluated' do
+      evaluated = create(:user)
+      instruments = create_list(:instrument, 3)
+
+      instruments.each do |instrument|
+        create(:evaluation, evaluated:, instrument:)
+      end
+
+      get "/api/v1/evaluated/#{evaluated.id}/instruments",
+          headers: psychologist_token
+
+      expect(response).to have_http_status(:success)
+      expect(json.length).to eq(3)
+      expect(json[0].keys).to include(*%i[instrument_id status name])
+    end
+
+    it 'returns no instruments if evaluated has none applied' do
+      evaluated = create(:user)
+
+      get "/api/v1/evaluated/#{evaluated.id}/instruments",
+          headers: psychologist_token
+
+      expect(response).to have_http_status(:success)
+      expect(json).to be_empty
+    end
+
+    it 'returns a not found status if the evaluated does not exist' do
+      get '/api/v1/evaluated/999/instruments', headers: psychologist_token
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end

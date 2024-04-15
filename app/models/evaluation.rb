@@ -2,14 +2,15 @@ class Evaluation < ApplicationRecord
   belongs_to :evaluated, class_name: 'User'
   belongs_to :instrument
 
-  before_validation :generate_unique_token
+  before_create :generate_unique_token
 
   enum status: { pending: 0, sent: 3, finished: 5 }
 
   validate :evaluated_must_be_valid_role
   validates :token, uniqueness: true
   validates :instrument_id, uniqueness: { scope: :evaluated_id,
-                                          message: I18n.t('errors.instrument_already_applied') }
+                                          message: I18n.t('errors.instrument_already_applied') },
+                            on: :create
 
   private
 

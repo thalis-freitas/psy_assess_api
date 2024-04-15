@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Api::V1::EvaluationsController', type: :request do
-  describe 'POST /api/v1/evaluations' do
+  context 'POST /api/v1/evaluations' do
     it 'creates an evaluation for an evaluated user with a given instrument' do
       evaluated = create(:user)
       instrument = create(:instrument)
@@ -14,6 +14,7 @@ describe 'Api::V1::EvaluationsController', type: :request do
       expect(Evaluation.count).to eq(1)
       expect(ActionMailer::Base.deliveries.count).to eq(1)
       expect(json[:message]).to eq('E-mail enviado com sucesso')
+      expect(Evaluation.first.status).to eq('sent')
     end
 
     it 'when faile does not create an evaluation' do
@@ -37,6 +38,21 @@ describe 'Api::V1::EvaluationsController', type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json[:instrument_id])
         .to include('Este instrumento já foi aplicado a este avaliado')
+    end
+  end
+
+  context 'GET /api/v1/evaluations/:id' do
+    it 'returns the correct attributes of a specific evaluations' do
+      evaluation = create(:evaluation)
+
+      get "/api/v1/evaluations/#{evaluation.id}", headers: psychologist_token
+
+      expect(response).to have_http_status(:success)
+      expect(json[:evaluation][:status]).to eq(evaluation.status)
+      expect(json[:evaluation][:score]).to eq(evaluation.score)
+
+      expect(json[:evaluation].keys)
+        .to include(*%i[id instrument evaluated status score description])
     end
   end
 end

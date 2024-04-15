@@ -24,7 +24,7 @@
 - [x] GET /api/v1/evaluated (listar todos os avaliados)
 - [x] GET /api/v1/evaluated/:id (dados de um avaliado específico)
 - [x] PUT /api/v1/evaluated/:id (atualizar dados de um avaliado)
-- [ ] GET /api/v1/evaluated/:id/instruments (listar os instrumentos de um avaliado)
+- [x] GET /api/v1/evaluated/:id/instruments (listar os instrumentos de um avaliado)
 
 #### Gestão de Instrumentos
 - [x] POST /api/v1/instruments (cadastrar um novo instrumento)
@@ -36,7 +36,7 @@
 - [x] POST /api/v1/evaluations/:id/send_instrument (enviar por e-mail o link do instrumento ao avaliado)
 
 #### Visualização dos Resultados
-- [ ] GET /api/v1/evaluations/:id/results (visualizar os resultados de um instrumento finalizado)
+- [x] GET /api/v1/evaluations/:id (consultar as informações de um instrumento aplicado)
 
 ### Avaliados
 
@@ -106,6 +106,8 @@ rails db:seed
 | E-mail             | Senha     |
 | ------------------ | --------- |
 | debora@psy.assess  | password  |
+
+**OBS:** Para acessar as requisições da API configuradas com o [Bruno](https://www.usebruno.com/), visite o repositório de requisições: [PsyAccess API Requests](https://github.com/thalis-freitas/psy_assess_requests).
 
 ## Como rodar os testes
 

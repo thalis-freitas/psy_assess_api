@@ -1,6 +1,6 @@
 class Api::V1::EvaluatedController < Api::V1::ApiController
   before_action :authorize
-  before_action :set_evaluated, only: %i[show update]
+  before_action :set_evaluated, only: %i[show update instruments]
 
   def index
     @evaluated = User.where(role: :evaluated)
@@ -29,6 +29,16 @@ class Api::V1::EvaluatedController < Api::V1::ApiController
       render json: { errors: @evaluated.errors },
              status: :unprocessable_entity
     end
+  end
+
+  def instruments
+    instruments = @evaluated.evaluations.includes(:instrument).map do |evaluation|
+      { id: evaluation.id, evaluated_id: evaluation.evaluated_id,
+        instrument_id: evaluation.instrument_id, status: evaluation.status,
+        name: evaluation.instrument.name }
+    end
+
+    render json: instruments, status: :ok
   end
 
   private
