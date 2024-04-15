@@ -1,5 +1,5 @@
 class Api::V1::EvaluationsController < Api::V1::ApiController
-  before_action :authorize
+  before_action :authorize, except: :confirm
   before_action :set_evaluation, only: :show
 
   def show
@@ -24,14 +24,25 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
   end
 
   def send_instrument
-    @evaluation.update!(status: :sent)
-
-    EvaluationMailer.send_instrument(@evaluation).deliver_now
+    @evaluation.update!(status: :sent) if EvaluationMailer.send_instrument(@evaluation).deliver_now
 
     render json: { message: I18n.t('success.email_successfully_sent') },
            status: :ok
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def confirm
+    evaluation = Evaluation.includes(:evaluated).find_by(token: params[:token])
+    if evaluation
+      evaluated = evaluation.evaluated
+      render json: { evaluation:, evaluated: {
+        name: evaluated.name, cpf: evaluated.cpf,
+        email: evaluated.email, birth_date: evaluated.birth_date
+      } }, status: :ok
+    else
+      render json: { error: I18n.t('errors.invalid_token') }, status: :not_found
+    end
   end
 
   private

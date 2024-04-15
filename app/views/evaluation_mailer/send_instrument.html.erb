@@ -5,12 +5,18 @@
   <title>Instrumento de Avaliação Disponível</title>
 </head>
 <body>
-  <h1>Olá <%= @evaluation.evaluated.name %>,</h1>
+  <h5>Olá <%= @evaluation.evaluated.name %>,</h5>
   <p>
-    Você foi convidado a completar um instrumento. Clique no link abaixo para iniciar sua avaliação.
+    Você foi convidado a completar o instrumento <b><%= @evaluation.instrument.name %></b>
   </p>
   <p>
-    <%= link_to 'Iniciar o instrumento', '' %>
+    Clique no link abaixo para iniciar sua avaliação.
   </p>
+  <p>
+    <%= link_to 'Iniciar o instrumento', "http://localhost:5173/confirm/#{@evaluation.token}" %>
+  </p>
+  <footer>
+    Atenciosamente, PsyAccess
+  </footer>
 </body>
 </html>

@@ -55,4 +55,28 @@ describe 'Api::V1::EvaluationsController', type: :request do
         .to include(*%i[id instrument evaluated status score description])
     end
   end
+
+  context 'GET /api/v1/confirm/:token' do
+    it 'returns evaluation and evaluated details when token is valid' do
+      evaluated = create(:user)
+      instrument = create(:instrument)
+      evaluation = create(:evaluation, evaluated:, instrument:, token: 'valid_token')
+
+      get "/api/v1/confirm/#{evaluation.token}", headers: psychologist_token
+
+      expect(response).to have_http_status(:ok)
+      expect(json[:evaluation][:id]).to eq(evaluation.id)
+      expect(json[:evaluated][:name]).to eq(evaluated.name)
+      expect(json[:evaluated][:cpf]).to eq(evaluated.cpf)
+      expect(json[:evaluated][:email]).to eq(evaluated.email)
+      expect(json[:evaluated][:birth_date]).to eq(evaluated.birth_date.to_s)
+    end
+
+    it 'returns an error when token is invalid' do
+      get '/api/v1/confirm/invalid_token', headers: psychologist_token
+
+      expect(response).to have_http_status(:not_found)
+      expect(json[:error]).to eq('Token inválido')
+    end
+  end
 end
