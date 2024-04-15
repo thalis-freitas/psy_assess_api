@@ -5,9 +5,7 @@ FactoryBot.define do
 
     trait :with_questions do
       after(:create) do |instrument|
-        create_list(:question, 5, instrument:) do |question|
-          create_list(:option, 4, question:)
-        end
+        create_list(:question, 5, :with_options, instrument:)
       end
     end
   end

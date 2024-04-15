@@ -1,5 +1,15 @@
 class Api::V1::EvaluationsController < Api::V1::ApiController
   before_action :authorize
+  before_action :set_evaluation, only: :show
+
+  def show
+    evaluation = { id: @evaluation.id, evaluated: @evaluation.evaluated.name,
+                   instrument: @evaluation.instrument.name,
+                   status: @evaluation.status, score: @evaluation.score,
+                   description: @evaluation.instrument.description }
+
+    render json: { evaluation: }, status: :ok
+  end
 
   def create
     evaluated = User.find(evaluation_params[:evaluated_id])
@@ -25,6 +35,10 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
   end
 
   private
+
+  def set_evaluation
+    @evaluation = Evaluation.find(params[:id])
+  end
 
   def evaluation_params
     params.permit(:evaluated_id, :instrument_id)
