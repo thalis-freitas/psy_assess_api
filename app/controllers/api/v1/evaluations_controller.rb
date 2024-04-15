@@ -51,7 +51,7 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
       render json: { evaluated:, evaluation: @evaluation },
              status: :ok
     else
-      render json: { errors: evaluated.errors.full_messages },
+      render json: { errors: evaluated.errors },
              status: :unprocessable_entity
     end
   end
