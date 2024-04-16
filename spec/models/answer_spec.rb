@@ -18,7 +18,7 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  describe 'validations' do
+  describe '#valid' do
     context 'when option_id is blank' do
       it 'adds a custom error message' do
         evaluation = create(:evaluation)

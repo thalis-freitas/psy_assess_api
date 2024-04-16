@@ -3,10 +3,13 @@ class Api::V1::AnswersController < Api::V1::ApiController
 
   def create
     answers_params.each do |answer_param|
-      @evaluation.answers.create!(answer_param)
+      option = Option.find(answer_param[:option_id])
+      @evaluation.answers.create!(
+        answer_param.with_defaults(score: option.score_value)
+      )
     end
 
-    render json: { answers: @evaluation.answers }, status: :created
+    render json: { evaluation: @evaluation }, status: :created
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.record.errors }, status: :unprocessable_entity
   end

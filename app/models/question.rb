@@ -4,5 +4,5 @@ class Question < ApplicationRecord
   has_many :options, dependent: :destroy
   has_many :answers, dependent: :destroy
 
-  accepts_nested_attributes_for :options, allow_destroy: true # testar SEM
+  accepts_nested_attributes_for :options, allow_destroy: true
 end
