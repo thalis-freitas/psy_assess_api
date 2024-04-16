@@ -12,6 +12,10 @@
 
 <p align="justify"> PsyAssess é um sistema que tem como objetivo permitir que psicólogos administrem avaliações psicológicas online, substituindo os tradicionais questionários em papel. Com interfaces separadas para profissionais e pacientes, o sistema simplifica o processo de cadastramento de avaliados, aplicação de instrumentos e análise de resultados. Ele oferece uma solução segura e eficiente para coletar e armazenar dados de avaliações, proporcionando aos psicólogos acesso imediato aos resultados dos testes, mantendo a confidencialidade e a integridade dos dados do avaliado. </p>
 
+O frontend da aplicação pode ser encontrado no repositório [Psy Assess](https://github.com/thalis-freitas/psy_assess).
+
+As requisições da API estão disponíveis no repositório [Psy Assess Requests](https://github.com/thalis-freitas/psy_assess_requests).
+
 ## Funcionalidades
 
 ### Psicólogos
@@ -103,7 +107,12 @@ rails db:seed
 | ------------------ | --------- |
 | debora@psy.assess  | password  |
 
-**OBS:** Para acessar as requisições da API configuradas com o [Bruno](https://www.usebruno.com/), visite o repositório de requisições: [PsyAccess API Requests](https://github.com/thalis-freitas/psy_assess_requests).
+Após configurar a API, configure o frontend seguindo as instruções disponíveis no repositório [Psy Assess](https://github.com/thalis-freitas/psy_assess).
+
+Para acessar as requisições da API configuradas com o [Bruno](https://www.usebruno.com/), visite o repositório de requisições: [Psy Access Requests](https://github.com/thalis-freitas/psy_assess_requests).
+
+## Como acessar os e-mails
+Para visualizar os e-mails enviados através da API acesse a [Interface do MailHog](http://localhost:8025/#).
 
 ## Como rodar os testes
 
