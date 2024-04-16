@@ -45,12 +45,8 @@
 - [x] POST /api/v1/evaluations/:id/confirm_data (confirmação dos dados do avaliado)
 
 #### Execução do Instrumento
-- [ ] GET /api/v1/evaluations/:id/start (iniciar a execução do instrumento)
-- [ ] POST /api/v1/evaluations/:id/answer (enviar respostas do instrumento)
-
-<div align="center">
-  :construction: Em desenvolvimento...
-</div>
+- [x] GET /api/v1/evaluations/:id/start (iniciar a execução do instrumento)
+- [x] POST /api/v1/evaluations/:evaluation_id/answer (enviar respostas do instrumento)
 
 ## Como rodar a aplicação
 

@@ -26,7 +26,7 @@ RSpec.describe 'Api::V1::Instruments', type: :request do
         end
       end
 
-      instrument_attributes = attributes_for(:instrument).merge(
+      instrument_attributes = attributes_for(:instrument).with_defaults(
         {
           questions_attributes: 5.times.map do
             {

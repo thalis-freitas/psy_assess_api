@@ -11,12 +11,17 @@ RSpec.describe Evaluation, type: :model do
       evaluation = Evaluation.new
       expect(evaluation).to respond_to(:instrument)
     end
+
+    it 'has many answers' do
+      evaluation = Evaluation.new
+      expect(evaluation).to respond_to(:answers)
+    end
   end
 
   describe 'status enum' do
     it 'should define correct status' do
       expect(Evaluation.statuses.keys)
-        .to contain_exactly('pending', 'sent', 'finished')
+        .to contain_exactly('pending', 'sent', 'in_progress', 'finished')
     end
 
     it 'should have default status as pending' do

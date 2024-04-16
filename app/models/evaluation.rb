@@ -2,9 +2,11 @@ class Evaluation < ApplicationRecord
   belongs_to :evaluated, class_name: 'User'
   belongs_to :instrument
 
+  has_many :answers, dependent: :destroy
+
   before_create :generate_unique_token
 
-  enum status: { pending: 0, sent: 3, finished: 5 }
+  enum status: { pending: 0, sent: 3, in_progress: 4, finished: 5 }
 
   validate :evaluated_must_be_valid_role
   validates :token, uniqueness: true

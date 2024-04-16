@@ -130,6 +130,7 @@ pt-BR:
       present: deve ficar em branco
       required: é obrigatório(a)
       taken: já está em uso
+      all_questions_must_be_filled: Todas as questões devem ser respondidas
       too_long:
         one: 'é muito longo (máximo: %{count} caracter)'
         other: 'é muito longo (máximo: %{count} caracteres)'

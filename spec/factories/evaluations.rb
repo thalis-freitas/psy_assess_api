@@ -9,9 +9,14 @@ FactoryBot.define do
       token { SecureRandom.hex(10) }
     end
 
+    trait :in_progress do
+      status { 'in_progress' }
+      token { SecureRandom.hex(10) }
+    end
+
     trait :finished do
       status { 'finished' }
-      score { rand(1..10) } # Supõe que a pontuação máxima seja 10
+      score { rand(0..15) }
       token { SecureRandom.hex(10) }
     end
   end
