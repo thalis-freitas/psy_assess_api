@@ -11,6 +11,11 @@ RSpec.describe Evaluation, type: :model do
       evaluation = Evaluation.new
       expect(evaluation).to respond_to(:instrument)
     end
+
+    it 'has many answers' do
+      evaluation = Evaluation.new
+      expect(evaluation).to respond_to(:answers)
+    end
   end
 
   describe 'status enum' do

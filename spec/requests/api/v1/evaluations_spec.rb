@@ -62,7 +62,7 @@ describe 'Api::V1::EvaluationsController', type: :request do
       instrument = create(:instrument)
       evaluation = create(:evaluation, evaluated:, instrument:, token: 'valid_token')
 
-      get "/api/v1/confirm/#{evaluation.token}", headers: psychologist_token
+      get "/api/v1/confirm/#{evaluation.token}"
 
       expect(response).to have_http_status(:ok)
       expect(json[:evaluation][:id]).to eq(evaluation.id)
@@ -73,7 +73,7 @@ describe 'Api::V1::EvaluationsController', type: :request do
     end
 
     it 'returns an error when token is invalid' do
-      get '/api/v1/confirm/invalid_token', headers: psychologist_token
+      get '/api/v1/confirm/invalid_token'
 
       expect(response).to have_http_status(:not_found)
       expect(json[:error]).to eq('Token inválido')
@@ -106,6 +106,35 @@ describe 'Api::V1::EvaluationsController', type: :request do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json[:errors]).to be_present
+    end
+  end
+
+  context 'GET /api/v1/evaluations/:id/start' do
+    it 'starts an evaluation successfully' do
+      evaluated = create(:user, role: :evaluated)
+      instrument = create(:instrument, :with_questions)
+      evaluation = create(:evaluation, evaluated:, instrument:)
+
+      get "/api/v1/evaluations/#{evaluation.id}/start"
+
+      expect(response).to have_http_status(:ok)
+      expect(evaluation.reload.status).to eq('in_progress')
+      expect(json[:evaluation][:instrument]).to be_present
+
+      expect(json[:evaluation][:instrument][:questions].first[:options])
+        .not_to be_empty
+    end
+
+    it 'handles failure to start evaluation' do
+      evaluated = create(:user, role: :evaluated)
+      instrument = create(:instrument)
+      evaluation = create(:evaluation, evaluated:, instrument:)
+
+      allow_any_instance_of(Evaluation).to receive(:update).and_return(false)
+
+      get "/api/v1/evaluations/#{evaluation.id}/start"
+
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 end

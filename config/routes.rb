@@ -14,6 +14,8 @@ Rails.application.routes.draw do
         post 'send_instrument', on: :member
         post 'confirm_data', on: :member
         get 'start', on: :member
+
+        resources :answers, only: [:create]
       end
 
       get '/confirm/:token', to: 'evaluations#confirm'

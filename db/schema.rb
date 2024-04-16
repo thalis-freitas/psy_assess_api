@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_14_135440) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_16_041218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "evaluation_id", null: false
+    t.bigint "question_id", null: false
+    t.bigint "option_id", null: false
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["evaluation_id"], name: "index_answers_on_evaluation_id"
+    t.index ["option_id"], name: "index_answers_on_option_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
 
   create_table "evaluations", force: :cascade do |t|
     t.bigint "evaluated_id", null: false
@@ -62,6 +74,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_14_135440) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "answers", "evaluations"
+  add_foreign_key "answers", "options"
+  add_foreign_key "answers", "questions"
   add_foreign_key "evaluations", "instruments"
   add_foreign_key "evaluations", "users", column: "evaluated_id"
   add_foreign_key "options", "questions"

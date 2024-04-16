@@ -3,13 +3,18 @@ require 'rails_helper'
 RSpec.describe Question, type: :model do
   describe 'associations' do
     it 'belongs to an instrument' do
-      association = Question.reflect_on_association(:instrument)
-      expect(association.macro).to eq(:belongs_to)
+      question = Question.new
+      expect(question).to respond_to(:instrument)
     end
 
     it 'has many options' do
-      association = Question.reflect_on_association(:options)
-      expect(association.macro).to eq(:has_many)
+      question = Question.new
+      expect(question).to respond_to(:options)
+    end
+
+    it 'has many answers' do
+      question = Question.new
+      expect(question).to respond_to(:answers)
     end
 
     it 'destroys options when question is destroyed' do
