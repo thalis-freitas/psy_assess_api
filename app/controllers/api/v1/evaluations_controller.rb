@@ -57,7 +57,9 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
   end
 
   def start
-    if @evaluation.update(status: 'in_progress')
+    if @evaluation.finished?
+      render json: { evaluation: @evaluation }, status: :ok
+    elsif @evaluation.in_progress!
       render json: { evaluation: format_evaluation }, status: :ok
     else
       render json: { errors: @evaluation.errors }, status: :unprocessable_entity

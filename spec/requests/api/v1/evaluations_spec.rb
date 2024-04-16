@@ -125,16 +125,16 @@ describe 'Api::V1::EvaluationsController', type: :request do
         .not_to be_empty
     end
 
-    it 'handles failure to start evaluation' do
-      evaluated = create(:user, role: :evaluated)
-      instrument = create(:instrument)
-      evaluation = create(:evaluation, evaluated:, instrument:)
-
-      allow_any_instance_of(Evaluation).to receive(:update).and_return(false)
+    it 'does not change to in_progress when evaluation status is finished' do
+      create(:user, role: :evaluated)
+      create(:instrument, :with_questions)
+      evaluation = create(:evaluation, :finished)
 
       get "/api/v1/evaluations/#{evaluation.id}/start"
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:ok)
+      expect(evaluation.reload.status).not_to eq('in_progress')
+      expect(json[:evaluation][:instrument]).not_to be_present
     end
   end
 end
