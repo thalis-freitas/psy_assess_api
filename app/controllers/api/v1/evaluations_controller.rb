@@ -1,6 +1,6 @@
 class Api::V1::EvaluationsController < Api::V1::ApiController
-  before_action :authorize, except: %i[confirm confirm_data]
-  before_action :set_evaluation, only: %i[show confirm_data]
+  before_action :authorize, except: %i[confirm confirm_data start]
+  before_action :set_evaluation, only: %i[show confirm_data start]
 
   def show
     evaluation = { id: @evaluation.id, evaluated: @evaluation.evaluated.name,
@@ -56,6 +56,14 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
     end
   end
 
+  def start
+    if @evaluation.update(status: 'in_progress')
+      render json: { evaluation: format_evaluation }, status: :ok
+    else
+      render json: { errors: @evaluation.errors }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_evaluation
@@ -68,5 +76,18 @@ class Api::V1::EvaluationsController < Api::V1::ApiController
 
   def evaluated_params
     params.require(:evaluated).permit(:name, :cpf, :email, :birth_date)
+  end
+
+  def format_evaluation
+    { id: @evaluation.id, status: @evaluation.status,
+      instrument: {
+        id: @evaluation.instrument.id, name: @evaluation.instrument.name,
+        questions: @evaluation.instrument.questions.map do |question|
+                     { id: question.id, text: question.text,
+                       options: question.options.map do |option|
+                         { id: option.id, text: option.text, score: option.score_value }
+                       end }
+                   end
+      } }
   end
 end

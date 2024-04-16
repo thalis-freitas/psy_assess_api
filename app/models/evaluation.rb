@@ -4,7 +4,7 @@ class Evaluation < ApplicationRecord
 
   before_create :generate_unique_token
 
-  enum status: { pending: 0, sent: 3, finished: 5 }
+  enum status: { pending: 0, sent: 3, in_progress: 4, finished: 5 }
 
   validate :evaluated_must_be_valid_role
   validates :token, uniqueness: true
